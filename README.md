@@ -5,7 +5,8 @@ Contributers
 --------
 
 The LED-matrix library is (c) Henner Zeller <h.zeller@acm.org>, licensed with
-[GNU General Public License Version 2.0]
+[GNU General Public License Version 2.0].
+
 RSS parser was initally developed by chubbyemu. 
 
 
