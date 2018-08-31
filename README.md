@@ -1,95 +1,31 @@
-Controlling RGB LED display with Raspberry Pi GPIO
+News Ticker: Controlling up to three chains of 16x32 RGB LED displays using Raspberry Pi.
 ==================================================
 
-A library to control commonly available 32x32 or 16x32 RGB LED panels with the
-Raspberry Pi. Can support PWM up to 11Bit per channel, providing true 24bpp
-color with CIE1931 profile.
-
-Supports 3 chains with many panels each.
-On a Raspberry Pi 2 or 3, you can easily chain 12 panels in that chain
-(so 36 panels total), but you can theoretically stretch that to up
-to 96-ish panels (32 chain length) and still reach
-around 100Hz refresh rate with full 24Bit color (theoretical - never tested
-this; there might likely be timing problems with the panels that will creep
-up then).
-
-With fewer colors or so-called 'outdoor panels' you can control even more,
-faster.
+Contributers
+--------
 
 The LED-matrix library is (c) Henner Zeller <h.zeller@acm.org>, licensed with
-[GNU General Public License Version 2.0](http://www.gnu.org/licenses/gpl-2.0.txt)
-(which means, if you use it in a product somewhere, you need to make the
-source and all your modifications available to the receiver of such product so
-that they have the freedom to adapt and improve).
+[GNU General Public License Version 2.0]
+RSS parser was initally developed by chubbyemu. 
+
 
 Overview
 --------
-The 32x32 or 16x32 RGB LED matrix panels can be scored at [Sparkfun][sparkfun],
-[AdaFruit][ada] or eBay and Aliexpress. If you are in China, I'd try to get
-them directly from some manufacturer, Taobao or Alibaba.
+The following project utlizes three 16x32 RGB LED matrix panels that are chained
+in order to display a scrolling news feed acquired from `RSS` sources.
 
-The `RGBMatrix` class provided in `include/led-matrix.h` does what is needed
-to control these. You can use this as a library in your own projects or just
-use the demo binary provided here which provides some useful examples.
 
-Check out [utils/ directory for some ready-made tools](./utils) to get started
-using the library, or the [examples-api-use/](./examples-api-use) directory if
-you want to get started programming your own utils.
+Required Materials
+-------------------
+1. Raspberry Pi 3 (Ubuntu Mate)
+  1.1 5V power supply
+2. Adafruit 16x32 LED matrix (3)
+  2.1 5V power supply
+3. F-F jumper wires (13)
+4. M-M jumper wires (4)
+5. Female DC power supply
 
-All Raspberry Pi versions supported
------------------------------------
-
-This supports the old Raspberry Pi's Version 1 with 26 pin header and also the
-B+ models, the Pi Zero, as well as the Raspberry Pi 2 and 3 with 40 pins.
-The 26 pin models can drive one chain of RGB panels, the 40 pin models
-**up to three** chains in parallel (each chain 12 or more panels long).
-
-The Raspberry Pi 2 and 3 are faster than older models (and the Pi Zero) and
-sometimes the cabeling can't keep up with the speed; check out
-this [troubleshooting section](#troubleshooting)
-what to do.
-
-The [Raspbian Lite][raspbian-lite] distribution is recommended.
-
-Types of Displays
------------------
-There are various types of displays that come all with the same Hub75 connector.
-They vary in the way the multiplexing is happening.
-
-Type w*h | Scan Multiplexing | Program commandline flags    | Remark
------:|:-----------------:|:-----------------------------|-------
-64x64 |  1:32             | --led-rows=64 --led-cols=64  | For displays with A,B,C,D,E line.
-64x64 |  1:32             | --led-rows=64 --led-cols=64 --led-row-addr-type=1 | For displays with A,B lines.
-64x32 |  1:16             | --led-rows=32 --led-cols=64  |
-64x32 |  1:8              | --led-rows=32 --led-cols=64 --led-multiplexing=1 | few mux choices
-32x32 |  1:16             | --led-rows=32                |
-32x32 |  1:8              | --led-rows=32 --led-multiplexing=1 | few mux choices
-32x16 |  1:8              | --led-rows=16                |
-32x16 |  1:4              | --led-rows=16 --led-multiplexing=1 | few mux choices
-32x16 |  1:4              | --led-rows=16 --led-row-addr-type=2 --led-multiplexing=4 | For direct A..D address panels.
-...   |
-
-These can be chained by connecting the output of one panel to the input of
-the next panel. You can chain quite a few together.
-
-The 64x64 matrixes typically come in two kinds: with 5 address
-lines (A, B, C, D, E), or (A, B); the latter needs a `--led-row-addr-type=1`
-parameter. So-called 'outdoor panels' are typically brighter and allow for
-faster refresh-rate for the same size, but do some multiplexing internally
-of which there are a few types out there; they can be chosen with
-the `--led-multiplexing` parameter.
-
-Generally, the higher scan-rate (e.g. 1:8), a.k.a. outdoor panels generally
-allow faster refresh rate, but you might need to figure out the multiplexing
-mapping if one of the three provided does not work.
-
-Some 32x16 outdoor matrixes with 1:4 scan (e.g. [Qiangli Q10(1/4) or X10(1/4)](http://qiangliled.com/products-63.html))
-have 4 address line (A, B, C, D). For such matrices is necessary to
-use `--led-row-addr-type=2` parameter. Also the matrix Qiangli Q10(1/4)
-have "Z"-stripe pixel mapping and in this case, you'd use two parameters
-at the same time `--led-row-addr-type=2 --led-multiplexing=4`.
-
-Let's do it
+Connecting Raspberry to LED matrix
 ------------
 This documentation is split into parts that help you through the process
 
@@ -605,46 +541,4 @@ the other arguments, no newline). This will use the last core
 only to refresh the display then, but it also means, that no other process can
 utilize it then. Still, I'd typically recommend it.
 
-Limitations
------------
-If you are using the Adafruit Hat in the default configuration, then we
-can't make use of the PWM hardware (which only outputs
-to a particular pin), so you'll see random brightness glitches. I strongly
-suggest to do the aforementioned hardware mod.
 
-The system needs constant CPU to update the display. Using the DMA controller
-was considered but after extensive experiments
-( https://github.com/hzeller/rpi-gpio-dma-demo )
-dropped due to its slow speed..
-
-There is an upper limit in how fast the GPIO pins can be controlled, which
-limits the frame-rate. Raspberry Pi 2's and newer are generally faster.
-
-Even with everything in place, you might see faint brightness fluctuations
-in particular if there is something going on on the network or in a terminal
-on the Pi; this could probably be mitigated with some more real-time
-kernel for the Pi; maybe there are also hardware limitations (memory bus
-contention?). Anyway, if you have a realtime kernel configuration that you
-have optimized for this application, let me know.
-
-To address the brightness fluctuations, you might experiment with the
-`FIXED_FRAME_MICROSECONDS` compile time option in [lib/Makefile](lib/Makefile)
-that has instructions how to set it up.
-
-Fun
----
-I am always happy to see users successfully using the software for wonderful
-things, like this installation by Dirk in Scharbeutz, Germany:
-
-![](./img/user-action-shot.jpg)
-
-[matrix64]: ./img/chained-64x64.jpg
-[sparkfun]: https://www.sparkfun.com/products/12584
-[ada]: http://www.adafruit.com/product/1484
-[rt-paper]: https://www.osadl.org/fileadmin/dam/rtlws/12/Brown.pdf
-[adafruit-hat]: https://www.adafruit.com/products/2345
-[raspbian-lite]: https://downloads.raspberrypi.org/raspbian_lite_latest
-[Adafruit HAT]: https://www.adafruit.com/products/2345
-[Nodejs binding]: https://github.com/zeitungen/node-rpi-rgb-led-matrix
-[Go binding]: https://github.com/mcuadros/go-rpi-rgb-led-matrix
-[Rust binding]: https://crates.io/crates/rpi-led-matrix
