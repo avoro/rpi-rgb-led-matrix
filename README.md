@@ -28,24 +28,26 @@ Required Materials
 
 Connecting Raspberry to LED matrix
 ------------
-This documentation is split into parts that help you through the process
 
-  1. <a href="wiring.md"><img src="img/wire-up-icon.png"></a>
-    [**Wire up the matrix to your Pi**](./wiring.md). This document describes
-    what goes where. You might also be interested
-    in [breakout boards](./adapter) for that.
-    If you have an [Adafruit HAT], you can choose that with
-    a command line option [described below](#if-you-have-an-adafruit-hat)
-  2. Run a demo. You find that in the
-     [examples-api-use/](./examples-api-use#running-some-demos) directory:
+1. Grab Raspberry Pi and note the pins
+<img src="img/raspberry-pi.jpg" width="300">
+2. Grab 1 Adafruit 16x32 LED matrix and note the pins
+<img src="img/hub75-other.jpg" width="300">
+<img src="img/hub75.jpg" width="300" height="400">
+3. Connect Rasberry
+<img src="img/raspberry-con.jpg" width="300">
+4. Connect LED matrix
+<img src="img/hub75-con.jpg" width="300">
+5. Chain 3 displays
+<img src="img/three-display-con.jpg" width="300">
+6. Wire the chain
+<img src="img/hot-wires.jpg" width="300">
+
 ```
 make -C examples-api-use
 sudo examples-api-use/demo -D0
 ```
-  3. Use the utilities. The [utils](./utils) directory has some ready-made
-    useful utilities to show content. [Go there](./utils) to see how to
-    compile and run these.
-  4. Write your own programs using the Matrix in C++ or Python.
+
 
 ### Utilities
 
