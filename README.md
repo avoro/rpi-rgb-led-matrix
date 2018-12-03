@@ -1,4 +1,4 @@
-News Ticker: Controlling up to three chains of 16x32 RGB LED displays using Raspberry Pi.
+Stock Ticker: Controlling three chains of 16x32 RGB LED displays using Raspberry Pi.
 ==================================================
 
 Contributers
@@ -13,7 +13,7 @@ RSS parser was initally developed by chubbyemu.
 Overview
 --------
 The following project utlizes three 16x32 RGB LED matrix panels that are chained
-in order to display a scrolling news feed acquired from `RSS` sources.
+in order to display a scrolling stock data acquired from `www.nasdaq.com`.
 
 
 Required Materials
@@ -36,7 +36,7 @@ Connecting Raspberry to LED matrix
 3. Connect Rasberry
 <img src="img/Wiring.png" width="300">
 <img src="img/raspberry-con.jpg" width="300">
-<img src="img/hub75.jpg" width="300" align="right">
+<img src="img/hub75.jpg" width="300" height = "500" align="right">
 4. Connect LED matrix
 <img src="img/hub75-con.jpg" width="300">
 5. Chain 3 displays
