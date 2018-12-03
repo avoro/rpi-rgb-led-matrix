@@ -13,7 +13,7 @@ RSS parser was initally developed by chubbyemu.
 Overview
 --------
 The following project utlizes three 16x32 RGB LED matrix panels that are chained
-in order to display a scrolling stock data acquired from `www.nasdaq.com`.
+in order to display scrolling stock data acquired from `www.nasdaq.com`.
 
 
 Required Materials
