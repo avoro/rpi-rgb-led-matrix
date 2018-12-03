@@ -14,6 +14,8 @@ Overview
 --------
 The following project utlizes three 16x32 RGB LED matrix panels that are chained
 in order to display scrolling stock data acquired from `www.nasdaq.com`.
+</br>
+<img src="img/scrolling-data.gif">
 
 
 Required Materials
