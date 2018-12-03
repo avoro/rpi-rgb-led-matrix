@@ -41,5 +41,15 @@ Connecting Raspberry to LED matrix
 <img src="img/hub75-con.jpg" width="300">
 5. Chain 3 displays
 <img src="img/three-display-con.jpg" width="300">
-6. Wire the chain
+6. Wire the chains
 <img src="img/hot-wires.jpg" width="300">
+
+Running the script
+------------
+To call the script use:
+```sh
+$ python rssparse.py
+```
+The console should display:
+</br>
+<img src="img/console-example.jpg" width="300">
